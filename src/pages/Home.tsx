@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronRight, ChevronDown, Star } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { AnimatedSection } from '../components/AnimatedSection';
 import { StickyScrollCards } from '../components/StickyScrollCards';
 import { SEO } from '../components/SEO';
 import MeetAndGreetImg from '../components/meetandgreet.42.48.png';
-import HeroVideo from '../components/hero-car.mp4';
+import HeroImg from '../components/hero-main-pic.jpg';
 
 const MOOVS_URL = "https://customer.moovs.app/mib-lane/new/info";
 
@@ -127,16 +127,13 @@ export function Home() {
       />
       {/* Hero Section */}
       <section className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 z-0 bg-dark">
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="absolute inset-0 w-full h-full object-cover opacity-80"
-          >
-            <source src={HeroVideo} type="video/mp4" />
-          </video>
+        <div className="absolute inset-0 z-0 bg-[#0E0E0E]">
+          <img 
+            src={HeroImg} 
+            alt="MiBLane Luxury Fleet"
+            className="absolute inset-0 w-full h-full object-cover opacity-50 pointer-events-none"
+          />
+          <div className="absolute inset-0 bg-black/30"></div>
           <div className="absolute inset-0 hero-overlay"></div>
         </div>
         
@@ -328,41 +325,6 @@ export function Home() {
             <h3 className="font-serif text-xl mb-3">Bay Area Experts</h3>
             <p className="text-gray-400 font-light">Serving SFO and the entire Bay Area with precision.</p>
           </AnimatedSection>
-        </div>
-      </section>
-
-      {/* Reviews */}
-      <section className="py-24 bg-cream px-6 md:px-12 border-t border-gray-200">
-        <div className="max-w-7xl mx-auto">
-          <AnimatedSection>
-             <p className="text-gold text-[10px] font-bold uppercase tracking-[0.2em] mb-2 text-center">Testimonials</p>
-            <h2 className="font-serif text-3xl md:text-5xl text-center text-dark mb-16">
-              What Our Clients Say
-            </h2>
-          </AnimatedSection>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[1, 2, 3].map((idx) => (
-              <AnimatedSection key={idx} delay={idx * 150}>
-                <div className="bg-white border border-gray-200/60 p-10 rounded-sm h-full flex flex-col" title="[REVIEW PLACEHOLDER — client to replace with real Google Reviews]">
-                  <div className="flex text-gold mb-6">
-                    <Star fill="currentColor" size={16} />
-                    <Star fill="currentColor" size={16} />
-                    <Star fill="currentColor" size={16} />
-                    <Star fill="currentColor" size={16} />
-                    <Star fill="currentColor" size={16} />
-                  </div>
-                  <p className="text-dark bg-white font-serif text-lg leading-relaxed flex-grow mb-8 italic">
-                    "I had an amazing experience with MiBLane. The chauffeur was highly professional, punctual, and the vehicle was immaculate. Will definitely book again for my next trip to SFO."
-                  </p>
-                  <div>
-                    <h4 className="text-[11px] font-bold uppercase tracking-widest text-dark">Client Name</h4>
-                    <p className="text-xs text-graytext mt-1">San Francisco, CA</p>
-                  </div>
-                </div>
-              </AnimatedSection>
-            ))}
-          </div>
         </div>
       </section>
 
