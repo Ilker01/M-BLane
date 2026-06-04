@@ -1,0 +1,6 @@
+{
+  "name": "MiBLane",
+  "description": "Production-ready website for MiBLane luxury chauffeur and limousine service.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

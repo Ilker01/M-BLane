@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", ui-serif, Georgia, serif;
+  --color-cream: #F5F0E8;
+  --color-dark: #111111;
+  --color-gold: #C9A84C;
+  --color-graytext: #6B6B6B;
+}
+
+@layer utilities {
+  .hero-overlay {
+    background: linear-gradient(to right, rgba(17,17,17,0.8) 0%, rgba(17,17,17,0.3) 100%);
+  }
+  
+  .glass {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+  }
+
+  .animate-fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .animate-fade-up.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .animate-fade-in {
+    opacity: 0;
+    transition: opacity 1s ease-out;
+  }
+  .animate-fade-in.is-visible {
+    opacity: 1;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+}
+
+body {
+  background-color: var(--color-cream);
+  color: var(--color-dark);
+}
+
+
