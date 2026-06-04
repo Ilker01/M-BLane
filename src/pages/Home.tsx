@@ -105,7 +105,7 @@ const faqs = [
   },
   {
     q: "What are your service hours?",
-    a: "We are available 24 hours a day, 7 days a week. You can also reach us through our chat agent on the website at any time."
+    a: "We are available 24 hours a day, 7 days a week."
   }
 ];
 
