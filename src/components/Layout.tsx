@@ -63,14 +63,16 @@ export function Layout() {
           </nav>
 
           <div className="flex items-center gap-4">
-            <a
-              href={MOOVS_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden sm:inline-flex bg-gold hover:bg-[#b39441] text-white px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider shadow-md transition-colors"
-            >
-              Book Now
-            </a>
+            {(!isHome || isScrolled) && (
+              <a
+                href={MOOVS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden sm:inline-flex bg-gold hover:bg-[#b39441] text-white px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider shadow-md transition-colors animate-in fade-in"
+              >
+                Book Now
+              </a>
+            )}
 
             {/* Mobile menu toggle */}
             <button
@@ -157,16 +159,18 @@ export function Layout() {
       </footer>
 
       {/* Floating mobile Book Now button */}
-      <div className="sm:hidden fixed bottom-6 left-6 right-6 z-40">
-        <a 
-          href={MOOVS_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex justify-center bg-gold text-white py-4 rounded-full text-xs font-bold uppercase tracking-widest shadow-lg hover:bg-[#b39441] transition-colors"
-        >
-          Book Now
-        </a>
-      </div>
+      {(!isHome || isScrolled) && (
+        <div className="sm:hidden fixed bottom-6 left-6 right-6 z-40 animate-in fade-in slide-in-from-bottom-5">
+          <a 
+            href={MOOVS_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex justify-center bg-gold text-white py-4 rounded-full text-xs font-bold uppercase tracking-widest shadow-lg hover:bg-[#b39441] transition-colors"
+          >
+            Book Now
+          </a>
+        </div>
+      )}
     </div>
   );
 }

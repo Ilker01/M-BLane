@@ -109,75 +109,24 @@ export function WineTour() {
         </div>
       </section>
 
-      {/* Pricing Section */}
+      {/* Booking Section */}
       <section className="py-24 px-6 md:px-12 bg-cream border-t border-gray-200">
-        <div className="max-w-6xl mx-auto">
-          <AnimatedSection>
-            <p className="text-gold text-[10px] font-bold uppercase tracking-[0.2em] mb-2 text-center">Flexible Rates</p>
-            <h2 className="font-serif text-4xl md:text-5xl text-center text-dark mb-24">
-              Services & Pricing
-            </h2>
+        <div className="max-w-3xl mx-auto text-center">
+          <AnimatedSection delay={200} className="w-full space-y-10 flex flex-col items-center">
+            <h3 className="font-serif text-3xl md:text-4xl text-dark">Book your exquisite journey</h3>
+            <p className="text-graytext font-light leading-relaxed text-sm md:text-base">
+              Embark on an unforgettable Napa wine tour with our exclusive service. From the moment you step into our luxurious vehicle, you'll experience the ultimate in comfort and style as we transport you to some of the finest vineyards in Napa Valley. Enjoy personalized itineraries, expert guidance, and VIP access to renowned wineries.
+            </p>
+            
+            <a 
+              href={MOOVS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-gold text-white px-10 py-4 rounded-sm text-sm uppercase font-semibold tracking-widest hover:bg-[#b39441] transition-colors w-full sm:w-auto text-center inline-block"
+            >
+              Reserve Your Tour
+            </a>
           </AnimatedSection>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start text-dark">
-            
-            <AnimatedSection delay={100} className="w-full">
-              <div className="bg-white rounded-sm p-10 border border-gray-200/50">
-                <h3 className="font-serif text-2xl border-b border-gray-100 pb-6 mb-8 uppercase tracking-widest text-[#111111]">6-Hour Napa Tour</h3>
-                <ul className="space-y-6 mb-12">
-                  <li className="flex justify-between items-center text-sm">
-                    <span className="text-graytext font-medium uppercase tracking-wider">Luxury Sedan</span>
-                    <span className="font-serif text-xl">$405 <span className="text-[10px] uppercase font-sans text-gray-400 block text-right mt-1">+ 20% gratuity</span></span>
-                  </li>
-                  <li className="flex justify-between items-center text-sm">
-                    <span className="text-graytext font-medium uppercase tracking-wider">Luxury SUV</span>
-                    <span className="font-serif text-xl">$485 <span className="text-[10px] uppercase font-sans text-gray-400 block text-right mt-1">+ 20% gratuity</span></span>
-                  </li>
-                  <li className="flex justify-between items-center text-sm">
-                    <span className="text-graytext font-medium uppercase tracking-wider">Luxury Sprinter</span>
-                    <span className="font-serif text-xl">$905 <span className="text-[10px] uppercase font-sans text-gray-400 block text-right mt-1">+ 20% gratuity</span></span>
-                  </li>
-                </ul>
-
-                <h3 className="font-serif text-xl border-b border-gray-100 pb-4 mb-6 uppercase tracking-widest">Additional Hour</h3>
-                <ul className="space-y-4">
-                  <li className="flex justify-between items-center text-xs">
-                    <span className="text-graytext uppercase tracking-wider">Sedan</span>
-                    <span className="font-serif text-lg">$95 <span className="text-[9px] uppercase font-sans text-gray-400 ml-2">+ 20% grat.</span></span>
-                  </li>
-                  <li className="flex justify-between items-center text-xs">
-                    <span className="text-graytext uppercase tracking-wider">SUV</span>
-                    <span className="font-serif text-lg">$115 <span className="text-[9px] uppercase font-sans text-gray-400 ml-2">+ 20% grat.</span></span>
-                  </li>
-                  <li className="flex justify-between items-center text-xs">
-                    <span className="text-graytext uppercase tracking-wider">Sprinter</span>
-                    <span className="font-serif text-lg">$175 <span className="text-[9px] uppercase font-sans text-gray-400 ml-2">+ 20% grat.</span></span>
-                  </li>
-                </ul>
-
-                <p className="mt-10 text-[10px] uppercase tracking-widest text-gray-400">
-                  * This promotion cannot be combined with other promotional offers.
-                </p>
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection delay={200} className="w-full space-y-10 flex flex-col items-center lg:items-start lg:pl-10 lg:mt-10">
-              <h3 className="font-serif text-3xl md:text-4xl text-center lg:text-left text-dark">Book your exquisite journey</h3>
-              <p className="text-graytext font-light leading-relaxed text-center lg:text-left text-sm md:text-base">
-                Embark on an unforgettable Napa wine tour with our exclusive service. From the moment you step into our luxurious vehicle, you'll experience the ultimate in comfort and style as we transport you to some of the finest vineyards in Napa Valley. Enjoy personalized itineraries, expert guidance, and VIP access to renowned wineries.
-              </p>
-              
-              <a 
-                href={MOOVS_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-gold text-white px-10 py-4 rounded-sm text-sm uppercase font-semibold tracking-widest hover:bg-[#b39441] transition-colors w-full sm:w-auto text-center"
-              >
-                Reserve Your Tour
-              </a>
-            </AnimatedSection>
-            
-          </div>
         </div>
       </section>
     </div>

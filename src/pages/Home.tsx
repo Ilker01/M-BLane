@@ -1,76 +1,47 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Star } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 import { AnimatedSection } from '../components/AnimatedSection';
 import { StickyScrollCards } from '../components/StickyScrollCards';
 import { SEO } from '../components/SEO';
 import MeetAndGreetImg from '../components/meetandgreet.42.48.png';
 import HeroImg from '../components/hero-main-pic.jpg';
 
+import ServicesCadillac from '../components/servicescadillac.jpg';
+import ServicesMercedes from '../components/servicesmercedes.jpg';
+import ServicesBMW from '../components/servicesbmw.jpg';
+import ServicesGMC from '../components/servicesgmc.32.07.png';
+import ServicesSprinter from '../components/servicessprinter.jpg';
+import NapaValley from '../components/napa valley.jpg';
+
 const MOOVS_URL = "https://customer.moovs.app/mib-lane/new/info";
 
 const services = [
   { 
     title: "Airport Transfers", 
-    desc: "A seamless journey from any Bay Area airport, tailored to your schedule.",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-[#111111] group-hover:text-[#C9A84C] transition-colors duration-300">
-        <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.2-1.1.7l-1.2 3.6c-.2.5.1 1 .5 1.2L9 14l-3.5 3.5-3.1-.9c-.4-.1-.8.2-1 .6l-.8 2.3c-.1.3 0 .7.3.9l4.6 2c.3.1.6 0 .8-.2l3.4-3.4 2.8-2.8 1.5 1.5-3.3 3.3c-.2.2-.3.5-.2.8l2 4.6c.2.3.6.5.9.3l2.3-.8c.4-.2.7-.6.6-1l-.9-3.1 2.3-6 4.7 6c.2.3.7.6 1.2.5l3.6-1.2c.5-.2.8-.6.7-1.1z"/>
-      </svg>
-    )
+    image: ServicesCadillac
   },
   { 
     title: "Corporate Transportation", 
-    desc: "Elevate your business travel with punctual, professional limo service.",
-    icon: (
-       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-[#111111] group-hover:text-[#C9A84C] transition-colors duration-300">
-        <rect width="20" height="14" x="2" y="7" rx="2" ry="2"/>
-        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
-      </svg>
-    ) 
+    image: ServicesMercedes
   },
   { 
     title: "Meet & Greet", 
-    desc: "Your chauffeur meets you at arrivals — luggage handled, ride waiting.",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-[#111111] group-hover:text-[#C9A84C] transition-colors duration-300">
-        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-        <circle cx="9" cy="7" r="4"/>
-        <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-      </svg>
-    ) 
+    image: ServicesBMW
   },
   { 
     title: "Special Events", 
-    desc: "Arrive in style for weddings, galas, and every occasion that matters.",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-[#111111] group-hover:text-[#C9A84C] transition-colors duration-300">
-        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-      </svg>
-    ) 
+    image: ServicesGMC
   },
   { 
     title: "VIP City Sight Tours", 
-    desc: "Explore San Francisco and the Bay Area in comfort and luxury.",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-[#111111] group-hover:text-[#C9A84C] transition-colors duration-300">
-        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
-        <circle cx="12" cy="10" r="3"/>
-      </svg>
-    ) 
+    image: ServicesSprinter,
+    imagePosition: "object-bottom"
   },
   { 
     title: "Napa Wine Tour", 
-    desc: "Discover Napa Valley's finest wineries in a meticulously maintained limousine.",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-[#111111] group-hover:text-[#C9A84C] transition-colors duration-300">
-        <path d="M8 22h8"/>
-        <path d="M7 10h10"/>
-        <path d="M12 15v7"/>
-        <path d="M12 15a5 5 0 0 0 5-5c0-2-.5-4-2-8H9c-1.5 4-2 6-2 8a5 5 0 0 0 5 5Z"/>
-      </svg>
-    ) 
+    image: NapaValley
   }
 ];
 
@@ -125,8 +96,35 @@ export function Home() {
         url="https://miblane.com"
         isHome={true}
       />
+      <Helmet>
+        <style>
+          {`
+            #moovs-widget-container {
+              width: 100%;
+              max-width: 900px;
+              margin: 0 auto;
+              transition: all 0.3s ease;
+            }
+            #moovs-widget-container iframe {
+              width: 100%;
+              border: none;
+              border-radius: 12px;
+              box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+              background: transparent;
+            }
+            @media (max-width: 768px) {
+              #moovs-widget-container {
+                max-width: 100%;
+              }
+              #moovs-widget-container iframe {
+                border-radius: 8px;
+              }
+            }
+          `}
+        </style>
+      </Helmet>
       {/* Hero Section */}
-      <section className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[850px] min-h-[100dvh] pt-32 pb-24 flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0 bg-[#0E0E0E]">
           <img 
             src={HeroImg} 
@@ -137,7 +135,7 @@ export function Home() {
           <div className="absolute inset-0 hero-overlay"></div>
         </div>
         
-        <div className="relative z-10 w-full px-6 md:px-16 mt-20">
+        <div className="relative z-10 w-full px-6 md:px-16">
           <div className="max-w-2xl mx-auto md:mx-0 text-center md:text-left">
             <AnimatedSection animation="fade-up">
               <h1 
@@ -152,22 +150,9 @@ export function Home() {
                 A safe start to a safe journey.
               </p>
             </AnimatedSection>
-            <AnimatedSection animation="fade-up" delay={400}>
-              <div className="flex flex-col sm:flex-row gap-4 items-center md:items-start justify-center md:justify-start">
-                <a 
-                  href={MOOVS_URL} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center bg-gold text-white px-10 py-4 rounded-sm text-sm uppercase font-semibold tracking-widest hover:bg-[#b39441] transition-colors w-full sm:w-auto"
-                >
-                  Schedule a Pickup
-                </a>
-                <Link 
-                  to="/services" 
-                  className="inline-flex items-center justify-center border border-white/40 text-white px-10 py-4 rounded-sm text-sm uppercase font-semibold tracking-widest hover:bg-white hover:text-dark transition-colors w-full sm:w-auto"
-                >
-                  Our Services
-                </Link>
+            <AnimatedSection animation="fade-up" delay={400} className="w-full px-4 md:px-0">
+              <div id="moovs-widget-container">
+                <iframe src="https://customer.moovs.app/mib-lane/iframe" title="Moovs App" className="w-full h-[650px] md:h-[450px]"></iframe>
               </div>
             </AnimatedSection>
           </div>
@@ -192,34 +177,54 @@ export function Home() {
       </section>
 
       {/* Services Overview */}
-      <section className="py-24 px-6 md:px-12 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 pb-4">
+      <section className="pt-24 pb-32 px-6 md:px-12 bg-[#F9F9F9]">
+        <div className="max-w-7xl mx-auto flex flex-col items-center">
+          
+          <AnimatedSection className="flex flex-col items-center mb-20 text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-dark mb-4 drop-shadow-sm font-sans tracking-tight">
+              Excellent
+            </h2>
+            <div className="flex gap-[2px] mb-2">
+              {[...Array(5)].map((_, i) => (
+                <div key={i} className="w-8 h-8 rounded-sm bg-[#00b67a] flex items-center justify-center">
+                  <Star className="w-5 h-5 text-white fill-white" />
+                </div>
+              ))}
+            </div>
+            <p className="text-sm text-gray-600 mb-3 font-medium">Based on <span className="underline decoration-1 underline-offset-2">208 reviews</span></p>
+            <div className="flex items-center justify-center gap-1.5 font-bold text-lg md:text-xl text-dark tracking-tight">
+              <Star className="w-6 h-6 text-[#00b67a] fill-[#00b67a]" /> Trustpilot
+            </div>
+          </AnimatedSection>
+
+          <div className="w-full text-left max-w-7xl mb-12">
             <AnimatedSection>
-              <p className="text-gold text-[10px] font-bold uppercase tracking-[0.2em] mb-2">Premium Offerings</p>
-              <h2 className="font-serif text-3xl md:text-5xl text-dark">
-                How can we serve you?
+              <h2 className="text-3xl md:text-[2.5rem] font-bold text-dark mb-4 font-sans tracking-tight leading-tight">
+                Our Services
               </h2>
-            </AnimatedSection>
-            <AnimatedSection delay={200}>
-              <Link to="/services" className="text-xs font-semibold mt-6 md:mt-0 inline-block text-dark hover:text-gold transition-colors uppercase tracking-wider">
-                VIEW ALL SERVICES &rarr;
-              </Link>
+              <p className="text-lg md:text-[1.35rem] text-gray-500 font-normal max-w-3xl leading-relaxed">
+                From airport rides to charter buses &mdash; we've got every trip covered with comfort and style.
+              </p>
             </AnimatedSection>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+          <div className="w-full overflow-x-auto pb-8 snap-x snap-mandatory flex gap-6 hide-scrollbar" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             {services.map((service, index) => (
-              <AnimatedSection key={index} delay={index * 100}>
-                <Link to="/services" className="block group h-full">
-                  <div className="h-full flex flex-col p-8 bg-[#F5F0E8] rounded-[12px] border-t-2 border-transparent hover:border-[#C9A84C] hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-                    <div className="mb-6">
-                      {service.icon}
+              <AnimatedSection key={index} delay={index * 100} className="snap-start shrink-0 w-[85vw] sm:w-[450px]">
+                <Link to="/services" className="block group">
+                  <div className="flex flex-col">
+                    <div className="overflow-hidden rounded-[24px] mb-5 aspect-[4/3] w-full bg-gray-200">
+                      {service.image ? (
+                        <img 
+                          src={service.image} 
+                          alt={service.title} 
+                          className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 ${service.imagePosition || 'object-center'}`} 
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gray-200"></div>
+                      )}
                     </div>
-                    <div className="flex-grow flex flex-col">
-                      <h3 className="font-serif text-[1.5rem] leading-tight text-dark mb-8 tracking-tight">{service.title}</h3>
-                      <p className="text-gray-600 text-sm leading-relaxed font-light mt-auto">{service.desc}</p>
-                    </div>
+                    <h3 className="text-[1.4rem] font-bold font-sans text-dark tracking-tight">{service.title}</h3>
                   </div>
                 </Link>
               </AnimatedSection>
