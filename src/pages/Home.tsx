@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronDown, Star } from 'lucide-react';
+import { ChevronDown, Star, ArrowLeft, ArrowRight } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { AnimatedSection } from '../components/AnimatedSection';
 import { StickyScrollCards } from '../components/StickyScrollCards';
@@ -205,6 +205,11 @@ export function Home() {
               <p className="text-lg md:text-[1.35rem] text-gray-500 font-normal max-w-3xl leading-relaxed">
                 From airport rides to charter buses &mdash; we've got every trip covered with comfort and style.
               </p>
+              <div className="flex items-center gap-2 text-sm text-gray-400 mt-6 md:hidden">
+                <ArrowLeft className="w-4 h-4" />
+                <span>Swipe to see more</span>
+                <ArrowRight className="w-4 h-4" />
+              </div>
             </AnimatedSection>
           </div>
           
