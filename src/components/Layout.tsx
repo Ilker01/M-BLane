@@ -1,19 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 
 const MOOVS_URL = "https://customer.moovs.app/mib-lane/new/info";
 
 export function Layout() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isPastFleet, setIsPastFleet] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
 
   const isHome = location.pathname === '/';
+  const isFleet = location.pathname === '/fleet';
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
+      
+      const fleetList = document.getElementById('fleet-list');
+      if (fleetList) {
+        const rect = fleetList.getBoundingClientRect();
+        setIsPastFleet(rect.bottom < window.innerHeight);
+      } else {
+        setIsPastFleet(false);
+      }
     };
     window.addEventListener('scroll', handleScroll);
     handleScroll();
@@ -40,6 +51,15 @@ export function Layout() {
   const linkClass = isScrolled || !isHome
     ? 'text-[#6B6B6B] hover:text-dark'
     : 'text-white/80 hover:text-white';
+
+  let showMobileFloatingBtn = false;
+  if (isFleet) {
+    showMobileFloatingBtn = isPastFleet;
+  } else if (isHome) {
+    showMobileFloatingBtn = isScrolled;
+  } else {
+    showMobileFloatingBtn = true;
+  }
 
   return (
     <div className="min-h-screen flex flex-col font-sans">
@@ -85,29 +105,51 @@ export function Layout() {
         </div>
 
         {/* Mobile menu */}
-        {mobileMenuOpen && (
-          <div className="md:hidden absolute top-20 left-0 w-full bg-white text-dark shadow-lg border-t border-gray-100">
-            <nav className="flex flex-col p-5 gap-4">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  to={link.path}
-                  className="text-xs font-medium uppercase tracking-[0.15em] text-[#6B6B6B] border-b border-gray-50 pb-3"
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: 'easeInOut' }}
+              className="md:hidden absolute top-20 left-0 w-full bg-white text-dark shadow-lg border-t border-gray-100 overflow-hidden"
+            >
+              <nav className="flex flex-col p-6 gap-4">
+                {navLinks.map((link, i) => (
+                  <motion.div
+                    key={link.name}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.3, delay: i * 0.05 }}
+                  >
+                    <Link
+                      to={link.path}
+                      className="block text-sm font-medium uppercase tracking-[0.15em] text-[#6B6B6B] border-b border-gray-50 pb-4"
+                    >
+                      {link.name}
+                    </Link>
+                  </motion.div>
+                ))}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
+                  transition={{ duration: 0.3, delay: navLinks.length * 0.05 }}
                 >
-                  {link.name}
-                </Link>
-              ))}
-              <a
-                href={MOOVS_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-gold text-white text-center py-4 rounded-sm text-xs font-bold uppercase tracking-widest mt-2"
-              >
-                Book Now
-              </a>
-            </nav>
-          </div>
-        )}
+                  <a
+                    href={MOOVS_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block bg-gold text-white text-center py-4 rounded-sm text-sm font-bold uppercase tracking-widest mt-2"
+                  >
+                    Book Now
+                  </a>
+                </motion.div>
+              </nav>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </header>
 
       <main className="flex-grow flex flex-col">
@@ -159,18 +201,25 @@ export function Layout() {
       </footer>
 
       {/* Floating mobile Book Now button */}
-      {(!isHome || isScrolled) && (
-        <div className="sm:hidden fixed bottom-6 left-6 right-6 z-40 animate-in fade-in slide-in-from-bottom-5">
-          <a 
-            href={MOOVS_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex justify-center bg-gold text-white py-4 rounded-full text-xs font-bold uppercase tracking-widest shadow-lg hover:bg-[#b39441] transition-colors"
+      <AnimatePresence>
+        {showMobileFloatingBtn && (
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            className="sm:hidden fixed bottom-6 left-6 right-6 z-40"
           >
-            Book Now
-          </a>
-        </div>
-      )}
+            <a 
+              href={MOOVS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex justify-center bg-gold text-white py-4 rounded-full text-xs font-bold uppercase tracking-widest shadow-lg hover:bg-[#b39441] transition-colors"
+            >
+              Book Now
+            </a>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
