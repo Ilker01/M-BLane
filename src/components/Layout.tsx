@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { ChevronDown, Menu, X, Facebook, Instagram, Twitter, Linkedin } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { CookiePopup } from './CookiePopup';
 
 const MOOVS_URL = "https://customer.moovs.app/mib-lane/new/info";
 
@@ -34,12 +35,27 @@ export function Layout() {
   useEffect(() => {
     setMobileMenuOpen(false);
     window.scrollTo(0, 0);
-  }, [location.pathname]);
+  }, [location.pathname, location.search]);
 
   const navLinks = [
     { name: 'Home', path: '/' },
     { name: 'Our Services', path: '/services' },
-    { name: 'Wine Tour', path: '/wine-tour' },
+    { 
+      name: 'Top Destinations', 
+      dropdown: [
+        { name: 'Napa', path: '/wine-tour' },
+        { name: 'Palo Alto', path: '/?title=Palo%20Alto' },
+        { name: 'Monterey', path: '/?title=Monterey' },
+      ]
+    },
+    { 
+      name: 'Events', 
+      dropdown: [
+        { name: 'FIFA World Cup 2026 (Jun 13 - Jul 2)', path: '/?title=FIFA%20World%20Cup%202026' },
+        { name: 'Outside Lands (Aug 7-9)', path: '/?title=Outside%20Lands%20(Aug%207-9)' },
+        { name: 'Monterey Car Week (Aug 14-23)', path: '/?title=Monterey%20Car%20Week%20(Aug%2014-23)' }
+      ]
+    },
     { name: 'Our Fleet', path: '/fleet' },
     { name: 'Contact Us', path: '/contact' },
   ];
@@ -72,13 +88,34 @@ export function Layout() {
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.path}
-                className={`text-[11px] font-medium uppercase tracking-[0.15em] transition-colors ${linkClass}`}
-              >
-                {link.name}
-              </Link>
+              link.dropdown ? (
+                <div key={link.name} className="relative group">
+                  <button className={`flex items-center gap-1 text-[11px] font-medium uppercase tracking-[0.15em] transition-colors ${linkClass}`}>
+                    {link.name} <ChevronDown size={14} />
+                  </button>
+                  <div className="absolute top-full left-0 pt-4 w-48 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-300">
+                    <div className="bg-white shadow-xl rounded-xl overflow-hidden border border-gray-100 py-2">
+                      {link.dropdown.map(drop => (
+                        <Link 
+                          key={drop.name} 
+                          to={drop.path} 
+                          className="block px-4 py-2 hover:bg-gray-50 text-[11px] uppercase tracking-[0.15em] text-[#6B6B6B] hover:text-gold transition-colors"
+                        >
+                          {drop.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <Link
+                  key={link.name}
+                  to={link.path as string}
+                  className={`text-[11px] font-medium uppercase tracking-[0.15em] transition-colors ${linkClass}`}
+                >
+                  {link.name}
+                </Link>
+              )
             ))}
           </nav>
 
@@ -123,12 +160,31 @@ export function Layout() {
                     exit={{ opacity: 0, x: -20 }}
                     transition={{ duration: 0.3, delay: i * 0.05 }}
                   >
-                    <Link
-                      to={link.path}
-                      className="block text-sm font-medium uppercase tracking-[0.15em] text-[#6B6B6B] border-b border-gray-50 pb-4"
-                    >
-                      {link.name}
-                    </Link>
+                    {link.dropdown ? (
+                      <div className="block border-b border-gray-50 pb-4">
+                        <div className="text-sm font-medium uppercase tracking-[0.15em] text-[#6B6B6B] mb-2">
+                          {link.name}
+                        </div>
+                        <div className="flex flex-col gap-3 pl-4 pt-1">
+                          {link.dropdown.map(drop => (
+                            <Link 
+                              key={drop.name} 
+                              to={drop.path} 
+                              className="text-xs uppercase tracking-[0.15em] text-[#6B6B6B] hover:text-gold transition-colors"
+                            >
+                              {drop.name}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    ) : (
+                      <Link
+                        to={link.path as string}
+                        className="block text-sm font-medium uppercase tracking-[0.15em] text-[#6B6B6B] border-b border-gray-50 pb-4"
+                      >
+                        {link.name}
+                      </Link>
+                    )}
                   </motion.div>
                 ))}
                 <motion.div
@@ -156,47 +212,73 @@ export function Layout() {
         <Outlet />
       </main>
 
-      <footer className="bg-dark text-white pt-16 pb-8 border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 grid grid-cols-1 md:grid-cols-4 gap-12 mb-12 border-b border-white/10 pb-12">
-          <div className="col-span-1 md:col-span-1">
-            <Link to="/" className="font-serif text-3xl mb-4 inline-block font-medium tracking-tighter">
+      <footer className="bg-[#1a1a1a] text-white pt-20 pb-8 mt-auto">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8 mb-16">
+          <div className="lg:col-span-1">
+            <Link to="/" className="font-serif text-[2rem] font-medium tracking-tighter hover:text-gray-200 transition-colors">
               MiBLane
             </Link>
-            <p className="text-white/60 text-xs font-light">
-              A safe start to a safe journey.
-            </p>
           </div>
           
           <div>
-            <h4 className="font-bold mb-6 text-[10px] uppercase tracking-[0.2em] text-white/50">Explore</h4>
-            <ul className="flex flex-col gap-4 text-xs text-white/60">
-              <li><Link to="/services" className="hover:text-gold transition-colors">Our Services</Link></li>
-              <li><Link to="/wine-tour" className="hover:text-gold transition-colors">Wine Tour</Link></li>
-              <li><Link to="/fleet" className="hover:text-gold transition-colors">Our Fleet</Link></li>
-              <li><Link to="/contact" className="hover:text-gold transition-colors">Contact Us</Link></li>
+            <h4 className="font-bold mb-6 text-[1.1rem] text-white font-sans">Our services</h4>
+            <ul className="flex flex-col gap-5 text-[15px] text-gray-300 font-medium">
+              <li><Link to="/services" className="hover:text-white transition-colors">Our Services</Link></li>
+              <li><Link to="/wine-tour" className="hover:text-white transition-colors">Wine Tour</Link></li>
+              <li><Link to="/fleet" className="hover:text-white transition-colors">Our Fleet</Link></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-bold mb-6 text-[10px] uppercase tracking-[0.2em] text-white/50">Contact</h4>
-            <ul className="flex flex-col gap-4 text-xs text-white/60">
-              <li>225 Cuesta Drive<br/>South San Francisco, CA 94080</li>
-              <li><a href="tel:+16692719105" className="hover:text-gold transition-colors">+1 669 271 9105</a></li>
-              <li><a href="mailto:booking@miblane.com" className="hover:text-gold transition-colors">booking@miblane.com</a></li>
+            <h4 className="font-bold mb-6 text-[1.1rem] text-white font-sans">Company</h4>
+            <ul className="flex flex-col gap-5 text-[15px] text-gray-300 font-medium">
+              <li><Link to="/about" className="hover:text-white transition-colors">About Us</Link></li>
+              <li><Link to="/contact" className="hover:text-white transition-colors">Contact Us</Link></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-bold mb-6 text-[1.1rem] text-white font-sans">Legal</h4>
+            <ul className="flex flex-col gap-5 text-[15px] text-gray-300 font-medium">
+              <li><Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
+              <li><Link to="/terms-conditions" className="hover:text-white transition-colors">Terms of service</Link></li>
             </ul>
           </div>
           
-          <div>
-            <h4 className="font-bold mb-6 text-[10px] uppercase tracking-[0.2em] text-white/50">Legal</h4>
-            <ul className="flex flex-col gap-4 text-xs text-white/60">
-              <li><Link to="/terms-conditions" className="hover:text-gold transition-colors">Terms & Conditions</Link></li>
-              <li><Link to="/privacy-policy" className="hover:text-gold transition-colors">Privacy Policy</Link></li>
-            </ul>
+          <div className="flex flex-col items-start lg:items-end">
+            <Link 
+              to="/contact" 
+              className="px-8 py-3 bg-white text-dark rounded-xl font-bold hover:bg-gray-100 transition-colors mb-10 w-full sm:w-auto text-center"
+            >
+              Contact us
+            </Link>
+            
+            <div className="self-start lg:self-end">
+              <h4 className="font-bold mb-4 text-[1.1rem] text-white font-sans">Social media</h4>
+              <div className="flex items-center gap-3">
+                <a href="#" className="w-10 h-10 rounded-full bg-[#1877f2] flex items-center justify-center hover:opacity-90 transition-opacity">
+                  <Facebook className="w-5 h-5 fill-white text-white" />
+                </a>
+                <a href="#" className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#f09433] via-[#e6683c] to-[#bc1888] flex items-center justify-center hover:opacity-90 transition-opacity">
+                  <Instagram className="w-5 h-5 text-white" />
+                </a>
+                <a href="#" className="w-10 h-10 rounded-full bg-white flex items-center justify-center hover:opacity-90 transition-opacity">
+                  <Twitter className="w-5 h-5 fill-black text-black" />
+                </a>
+                <a href="#" className="w-10 h-10 rounded-full bg-[#0a66c2] flex items-center justify-center hover:opacity-90 transition-opacity">
+                  <Linkedin className="w-5 h-5 fill-white text-white" />
+                </a>
+              </div>
+            </div>
           </div>
         </div>
         
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row items-center justify-between text-[9px] uppercase tracking-[0.2em] text-white/30">
-          <p>© 2025 MiBLane Luxury • All Rights Reserved</p>
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between text-[13px] text-gray-400">
+          <p>© {new Date().getFullYear()} MiBLane. All rights reserved.</p>
+          <div className="flex gap-6 mt-4 md:mt-0">
+            <Link to="/terms-conditions" className="hover:text-white transition-colors underline decoration-gray-500 underline-offset-4">Terms of service</Link>
+            <Link to="/privacy-policy" className="hover:text-white transition-colors underline decoration-gray-500 underline-offset-4">Privacy policy</Link>
+          </div>
         </div>
       </footer>
 
@@ -220,6 +302,7 @@ export function Layout() {
           </motion.div>
         )}
       </AnimatePresence>
+      <CookiePopup />
     </div>
   );
 }

@@ -10,6 +10,7 @@ import { Home } from './pages/Home';
 import { Services } from './pages/Services';
 import { WineTour } from './pages/WineTour';
 import { Fleet } from './pages/Fleet';
+import { About } from './pages/About';
 import { BookNow } from './pages/BookNow';
 import { Contact } from './pages/Contact';
 import { PrivacyPolicy } from './pages/PrivacyPolicy';
@@ -25,6 +26,7 @@ export default function App() {
             <Route path="services" element={<Services />} />
             <Route path="wine-tour" element={<WineTour />} />
             <Route path="fleet" element={<Fleet />} />
+            <Route path="about" element={<About />} />
             <Route path="book-now" element={<BookNow />} />
             <Route path="contact" element={<Contact />} />
             <Route path="privacy-policy" element={<PrivacyPolicy />} />

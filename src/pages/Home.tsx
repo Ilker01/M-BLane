@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { ChevronDown, Star, ArrowLeft, ArrowRight } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
+import { ChevronDown, Star, ArrowLeft, ArrowRight, Users, Briefcase } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { AnimatedSection } from '../components/AnimatedSection';
 import { StickyScrollCards } from '../components/StickyScrollCards';
@@ -8,40 +8,65 @@ import { SEO } from '../components/SEO';
 import MeetAndGreetImg from '../components/meetandgreet.42.48.png';
 import HeroImg from '../components/hero-main-pic.jpg';
 
-import ServicesCadillac from '../components/servicescadillac.jpg';
-import ServicesMercedes from '../components/servicesmercedes.jpg';
-import ServicesBMW from '../components/servicesbmw.jpg';
-import ServicesGMC from '../components/servicesgmc.32.07.png';
-import ServicesSprinter from '../components/servicessprinter.jpg';
+import CadillacSUV from '../components/Cadillacexecutivesuv.27.09.png';
+import BMW530 from '../components/bmw530sedan.28.03.png';
+import MercedesSedan from '../components/mercedessedan.28.24.png';
+import GMCYukon from '../components/gmcyukonsuv.27.34.png';
+import SprinterVan from '../components/sprinter.29.16.png';
+
 import NapaValley from '../components/napa valley.jpg';
+import TopNapa from '../components/topnapa.jpg';
+import TopPalo from '../components/toppalo.jpg';
+import TopMonterey from '../components/topmonterey.jpg';
 
 const MOOVS_URL = "https://customer.moovs.app/mib-lane/new/info";
 
-const services = [
-  { 
-    title: "Airport Transfers", 
-    image: ServicesCadillac
+const vehicles = [
+  {
+    title: "Premium sedan",
+    desc: "Mercedes E-Class, BMW 530, Lexus ES, Cadillac CT6, or similar.",
+    passengers: "2",
+    luggage: "2",
+    image: MercedesSedan,
   },
-  { 
-    title: "Corporate Transportation", 
-    image: ServicesMercedes
+  {
+    title: "Premium SUV",
+    desc: "GMC Yukon, Chevy Suburban, Ford Expedition, or similar.",
+    passengers: "6",
+    luggage: "6",
+    image: GMCYukon,
   },
-  { 
-    title: "Meet & Greet", 
-    image: ServicesBMW
+  {
+    title: "First class SUV",
+    desc: "Cadillac Escalade Platinum Sport, Lincoln Navigator, or similar.",
+    passengers: "6",
+    luggage: "5",
+    image: CadillacSUV,
   },
-  { 
-    title: "Special Events", 
-    image: ServicesGMC
+  {
+    title: "Sprinter Van",
+    desc: "Mercedes Sprinter or similar.",
+    passengers: "12",
+    luggage: "10",
+    image: SprinterVan,
+  }
+];
+
+const destinations = [
+  {
+    title: "Napa, CA",
+    image: TopNapa,
+    path: "/wine-tour"
   },
-  { 
-    title: "VIP City Sight Tours", 
-    image: ServicesSprinter,
-    imagePosition: "object-bottom"
+  {
+    title: "Palo Alto, CA",
+    image: TopPalo,
+    path: "/?title=Palo%20Alto"
   },
-  { 
-    title: "Napa Wine Tour", 
-    image: NapaValley
+  {
+    title: "Monterey, CA",
+    image: TopMonterey,
+    path: "/?title=Monterey"
   }
 ];
 
@@ -82,6 +107,25 @@ const faqs = [
 
 export function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [searchParams] = useSearchParams();
+  const vehiclesScrollRef = useRef<HTMLDivElement>(null);
+  const destinationsScrollRef = useRef<HTMLDivElement>(null);
+
+  const scrollVehicles = (direction: 'left' | 'right') => {
+    if (vehiclesScrollRef.current) {
+      const scrollAmount = window.innerWidth < 768 ? window.innerWidth * 0.85 : 450;
+      vehiclesScrollRef.current.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
+    }
+  };
+
+  const scrollDestinations = (direction: 'left' | 'right') => {
+    if (destinationsScrollRef.current) {
+      const scrollAmount = window.innerWidth < 768 ? window.innerWidth * 0.85 : 450;
+      destinationsScrollRef.current.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
+    }
+  };
+  
+  const bookingTitle = searchParams.get('title');
 
   const toggleFaq = (index: number) => {
     setOpenFaq(openFaq === index ? null : index);
@@ -124,7 +168,7 @@ export function Home() {
         </style>
       </Helmet>
       {/* Hero Section */}
-      <section className="relative min-h-[850px] min-h-[100dvh] pt-32 pb-24 flex items-center justify-center overflow-hidden">
+      <section id="hero" className="relative min-h-[850px] min-h-[100dvh] pt-32 pb-24 flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0 bg-[#0E0E0E]">
           <img 
             src={HeroImg} 
@@ -142,7 +186,7 @@ export function Home() {
                 className="font-serif text-white mb-4 leading-none"
                 style={{ fontSize: 'clamp(4rem, 8vw, 7rem)' }}
               >
-                Arrive in Style.
+                {bookingTitle ? decodeURIComponent(bookingTitle) : 'Arrive in Style.'}
               </h1>
             </AnimatedSection>
             <AnimatedSection animation="fade-up" delay={200}>
@@ -200,10 +244,10 @@ export function Home() {
           <div className="w-full text-left max-w-7xl mb-12">
             <AnimatedSection>
               <h2 className="text-3xl md:text-[2.5rem] font-bold text-dark mb-4 font-sans tracking-tight leading-tight">
-                Our Services
+                Premium Vehicles for Every Occasion
               </h2>
               <p className="text-lg md:text-[1.35rem] text-gray-500 font-normal max-w-3xl leading-relaxed">
-                From airport rides to charter buses &mdash; we've got every trip covered with comfort and style.
+                Select from sleek sedans or spacious SUVs &mdash; comfort and style come standard.
               </p>
               <div className="flex items-center gap-2 text-sm text-gray-400 mt-6 md:hidden">
                 <ArrowLeft className="w-4 h-4" />
@@ -213,27 +257,122 @@ export function Home() {
             </AnimatedSection>
           </div>
           
-          <div className="w-full overflow-x-auto pb-8 snap-x snap-mandatory flex gap-6 hide-scrollbar" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-            {services.map((service, index) => (
-              <AnimatedSection key={index} delay={index * 100} className="snap-start shrink-0 w-[85vw] sm:w-[450px]">
-                <Link to="/services" className="block group">
-                  <div className="flex flex-col">
-                    <div className="overflow-hidden rounded-[24px] mb-5 aspect-[4/3] w-full bg-gray-200">
-                      {service.image ? (
-                        <img 
-                          src={service.image} 
-                          alt={service.title} 
-                          className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 ${service.imagePosition || 'object-center'}`} 
-                        />
-                      ) : (
-                        <div className="w-full h-full bg-gray-200"></div>
-                      )}
-                    </div>
-                    <h3 className="text-[1.4rem] font-bold font-sans text-dark tracking-tight">{service.title}</h3>
+          <div className="relative w-full -mx-4 px-4 sm:mx-0 sm:px-0">
+            {/* Desktop Navigation Arrows */}
+            <button 
+              onClick={() => scrollVehicles('left')}
+              className="hidden md:flex absolute -left-6 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white rounded-full shadow-lg items-center justify-center text-dark hover:bg-gray-50 hover:scale-105 transition-all border border-gray-100"
+              aria-label="Scroll left"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </button>
+            
+            <button 
+              onClick={() => scrollVehicles('right')}
+              className="hidden md:flex absolute -right-6 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white rounded-full shadow-lg items-center justify-center text-dark hover:bg-gray-50 hover:scale-105 transition-all border border-gray-100"
+              aria-label="Scroll right"
+            >
+              <ArrowRight className="w-5 h-5" />
+            </button>
+
+            <div 
+              ref={vehiclesScrollRef}
+              className="w-full overflow-x-auto pb-8 snap-x snap-mandatory flex gap-6 hide-scrollbar" 
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
+              {vehicles.map((vehicle, index) => (
+                <AnimatedSection key={index} delay={index * 100} className="snap-start shrink-0 w-[85vw] sm:w-[450px]">
+                <div className="bg-white rounded-3xl p-6 sm:p-8 flex flex-col h-full hover:shadow-lg transition-shadow border border-gray-100">
+                  <div className="w-full h-[200px] sm:h-[240px] mb-6 flex items-center justify-center">
+                    <img 
+                      src={vehicle.image} 
+                      alt={vehicle.title} 
+                      className="w-full h-full object-contain object-center scale-110" 
+                    />
                   </div>
-                </Link>
+                  <div className="flex justify-between items-center mb-3 mt-auto">
+                    <h3 className="text-[1.5rem] font-bold font-sans text-dark tracking-tight">{vehicle.title}</h3>
+                    <div className="flex items-center gap-3 text-sm font-semibold text-dark">
+                      <div className="flex items-center gap-1.5 hover:text-gray-600 transition-colors" title="Passengers">
+                        <Users className="w-[18px] h-[18px]" />
+                        <span className="text-[1rem]">{vehicle.passengers}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5 hover:text-gray-600 transition-colors" title="Luggage">
+                        <Briefcase className="w-[18px] h-[18px]" />
+                        <span className="text-[1rem]">{vehicle.luggage}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <p className="text-[#6B6B6B] text-[1.1rem] leading-relaxed">
+                    {vehicle.desc}
+                  </p>
+                </div>
               </AnimatedSection>
             ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Top Destinations */}
+      <section className="pt-24 pb-32 px-6 md:px-12 bg-white">
+        <div className="max-w-7xl mx-auto flex flex-col items-center">
+          <div className="w-full text-left max-w-7xl mb-12">
+            <AnimatedSection>
+              <h2 className="text-3xl md:text-[2.5rem] font-bold text-dark mb-4 font-sans tracking-tight leading-tight">
+                Top Destinations
+              </h2>
+              <p className="text-lg md:text-[1.35rem] text-gray-500 font-normal max-w-3xl leading-relaxed">
+                From coast to coast &mdash; premium rides, no matter the city.
+              </p>
+              <div className="flex items-center gap-2 text-sm text-gray-400 mt-6 md:hidden">
+                <ArrowLeft className="w-4 h-4" />
+                <span>Swipe to see more</span>
+                <ArrowRight className="w-4 h-4" />
+              </div>
+            </AnimatedSection>
+          </div>
+          
+          <div className="relative w-full -mx-4 px-4 sm:mx-0 sm:px-0">
+            {/* Desktop Navigation Arrows */}
+            <button 
+              onClick={() => scrollDestinations('left')}
+              className="hidden md:flex absolute -left-6 top-[37%] -translate-y-1/2 z-10 w-12 h-12 bg-white rounded-full shadow-lg items-center justify-center text-dark hover:bg-gray-50 hover:scale-105 transition-all border border-gray-100"
+              aria-label="Scroll left"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </button>
+            
+            <button 
+              onClick={() => scrollDestinations('right')}
+              className="hidden md:flex absolute -right-6 top-[37%] -translate-y-1/2 z-10 w-12 h-12 bg-white rounded-full shadow-lg items-center justify-center text-dark hover:bg-gray-50 hover:scale-105 transition-all border border-gray-100"
+              aria-label="Scroll right"
+            >
+              <ArrowRight className="w-5 h-5" />
+            </button>
+
+            <div 
+              ref={destinationsScrollRef}
+              className="w-full overflow-x-auto pb-8 snap-x snap-mandatory flex gap-6 hide-scrollbar" 
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
+              {destinations.map((dest, index) => (
+                <AnimatedSection key={index} delay={index * 100} className="snap-start shrink-0 w-[85vw] sm:w-[450px]">
+                  <Link to={dest.path} onClick={() => { if(dest.path.includes('#hero')) setTimeout(() => document.getElementById('hero')?.scrollIntoView({behavior: 'smooth'}), 100) }} className="block group">
+                    <div className="flex flex-col">
+                      <div className="overflow-hidden rounded-[24px] mb-5 aspect-[4/3] w-full bg-gray-200">
+                        <img 
+                          src={dest.image} 
+                          alt={dest.title} 
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 object-center" 
+                        />
+                      </div>
+                      <h3 className="text-[1.4rem] font-bold font-sans text-dark tracking-tight">{dest.title}</h3>
+                    </div>
+                  </Link>
+                </AnimatedSection>
+              ))}
+            </div>
           </div>
         </div>
       </section>
