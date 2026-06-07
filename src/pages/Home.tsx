@@ -101,7 +101,7 @@ export function Home() {
           {`
             #moovs-widget-container {
               width: 100%;
-              max-width: 900px;
+              max-width: 100%;
               margin: 0 auto;
               transition: all 0.3s ease;
             }
@@ -135,8 +135,8 @@ export function Home() {
           <div className="absolute inset-0 hero-overlay"></div>
         </div>
         
-        <div className="relative z-10 w-full px-6 md:px-16">
-          <div className="max-w-2xl mx-auto md:mx-0 text-center md:text-left">
+        <div className="relative z-10 w-full px-2 md:px-4">
+          <div className="max-w-[1600px] mx-auto text-center">
             <AnimatedSection animation="fade-up">
               <h1 
                 className="font-serif text-white mb-4 leading-none"
@@ -150,7 +150,7 @@ export function Home() {
                 A safe start to a safe journey.
               </p>
             </AnimatedSection>
-            <AnimatedSection animation="fade-up" delay={400} className="w-full px-4 md:px-0">
+            <AnimatedSection animation="fade-up" delay={400} className="w-full px-0">
               <div id="moovs-widget-container">
                 <iframe src="https://customer.moovs.app/mib-lane/iframe" title="Moovs App" className="w-full h-[650px] md:h-[450px]"></iframe>
               </div>
