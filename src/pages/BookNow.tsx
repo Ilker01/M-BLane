@@ -6,7 +6,7 @@ const MOOVS_URL = "https://customer.moovs.app/mib-lane/new/info";
 
 export function BookNow() {
   return (
-    <div className="flex flex-col bg-white pt-32 pb-24 px-6 md:px-12 min-h-[85vh] items-center justify-center">
+    <div className="flex flex-col bg-white pt-48 pb-24 px-6 md:px-12 min-h-[85vh] items-center justify-center">
       <SEO 
         title="Book Now | MiBLane Luxury Limo — San Francisco Bay Area"
         description="Book your luxury chauffeur or limousine service with MiBLane online. Available 24/7 across the San Francisco Bay Area. Airport transfers, corporate rides, wine tours and more."
@@ -39,10 +39,10 @@ export function BookNow() {
               </p>
               <div className="flex flex-col gap-4 items-center justify-center">
                 <a 
-                  href="tel:+16692719105" 
+                  href="tel:+16505805650" 
                   className="font-serif text-2xl text-dark hover:text-gold transition-colors"
                 >
-                  +1 669 271 9105
+                  +1 (650) 580-5650
                 </a>
                 <a 
                   href="mailto:booking@miblane.com" 

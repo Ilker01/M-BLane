@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
-import { ChevronDown, Menu, X, Facebook, Instagram, Twitter, Linkedin } from 'lucide-react';
+import { ChevronDown, Menu, X, Instagram } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { CookiePopup } from './CookiePopup';
+import MasterLogo from './masterlogo.jpg';
 
 const MOOVS_URL = "https://customer.moovs.app/mib-lane/new/info";
 
@@ -60,13 +61,9 @@ export function Layout() {
     { name: 'Contact Us', path: '/contact' },
   ];
 
-  const navClass = isScrolled || !isHome
-    ? 'bg-white border-b border-gray-100 text-dark'
-    : 'bg-transparent text-white border-b border-transparent';
+  const navClass = 'bg-white border-b border-gray-100 text-dark';
 
-  const linkClass = isScrolled || !isHome
-    ? 'text-[#6B6B6B] hover:text-dark'
-    : 'text-white/80 hover:text-white';
+  const linkClass = 'text-[#6B6B6B] hover:text-dark';
 
   let showMobileFloatingBtn = false;
   if (isFleet) {
@@ -79,10 +76,14 @@ export function Layout() {
 
   return (
     <div className="min-h-screen flex flex-col font-sans">
-      <header className={`fixed w-full top-0 z-50 transition-all duration-300 ${navClass}`}>
-        <div className="w-full px-6 lg:px-12 h-20 flex items-center justify-between">
-          <Link to="/" className="font-serif text-2xl font-medium tracking-tighter">
-            MiBLane
+      <header className={`fixed w-full top-0 z-50 transition-all duration-500 ease-in-out ${navClass} ${isScrolled ? 'shadow-sm' : ''}`}>
+        <div className={`w-full px-6 lg:px-12 flex items-center justify-between transition-all duration-500 ease-in-out ${isScrolled ? 'h-20' : 'h-32 md:h-40'}`}>
+          <Link to="/" className="flex items-center">
+            <img 
+              src={MasterLogo} 
+              alt="MiBLane Logo" 
+              className={`w-auto object-contain transition-all duration-500 ease-in-out mix-blend-multiply ${isScrolled ? 'h-10 md:h-12' : 'h-16 md:h-24 lg:h-28'}`} 
+            />
           </Link>
 
           {/* Desktop Nav */}
@@ -120,7 +121,6 @@ export function Layout() {
           </nav>
 
           <div className="flex items-center gap-4">
-            {(!isHome || isScrolled) && (
               <a
                 href={MOOVS_URL}
                 target="_blank"
@@ -129,7 +129,6 @@ export function Layout() {
               >
                 Book Now
               </a>
-            )}
 
             {/* Mobile menu toggle */}
             <button
@@ -215,8 +214,8 @@ export function Layout() {
       <footer className="bg-[#1a1a1a] text-white pt-20 pb-8 mt-auto">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8 mb-16">
           <div className="lg:col-span-1">
-            <Link to="/" className="font-serif text-[2rem] font-medium tracking-tighter hover:text-gray-200 transition-colors">
-              MiBLane
+            <Link to="/" className="inline-block">
+              <img src={MasterLogo} alt="MiBLane Logo" className="h-12 md:h-16 w-auto object-contain invert mix-blend-screen opacity-90" />
             </Link>
           </div>
           
@@ -256,17 +255,8 @@ export function Layout() {
             <div className="self-start lg:self-end">
               <h4 className="font-bold mb-4 text-[1.1rem] text-white font-sans">Social media</h4>
               <div className="flex items-center gap-3">
-                <a href="#" className="w-10 h-10 rounded-full bg-[#1877f2] flex items-center justify-center hover:opacity-90 transition-opacity">
-                  <Facebook className="w-5 h-5 fill-white text-white" />
-                </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#f09433] via-[#e6683c] to-[#bc1888] flex items-center justify-center hover:opacity-90 transition-opacity">
+                <a href="https://www.instagram.com/miblane_/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#f09433] via-[#e6683c] to-[#bc1888] flex items-center justify-center hover:opacity-90 transition-opacity">
                   <Instagram className="w-5 h-5 text-white" />
-                </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-white flex items-center justify-center hover:opacity-90 transition-opacity">
-                  <Twitter className="w-5 h-5 fill-black text-black" />
-                </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-[#0a66c2] flex items-center justify-center hover:opacity-90 transition-opacity">
-                  <Linkedin className="w-5 h-5 fill-white text-white" />
                 </a>
               </div>
             </div>

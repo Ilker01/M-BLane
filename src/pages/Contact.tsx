@@ -4,10 +4,10 @@ import { SEO } from '../components/SEO';
 
 export function Contact() {
   return (
-    <div className="flex flex-col bg-white pt-32 pb-24 px-6 md:px-12 min-h-screen">
+    <div className="flex flex-col bg-white pt-48 pb-24 px-6 md:px-12 min-h-screen">
       <SEO 
         title="Contact Us | MiBLane — South San Francisco, CA"
-        description="Get in touch with MiBLane. Call +1 669 271 9105 or email booking@miblane.com. Located at 225 Cuesta Drive, South San Francisco, CA 94080. Available 24/7."
+        description="Get in touch with MiBLane. Call +1 (650) 580-5650 or email booking@miblane.com. Located at 225 Cuesta Drive, South San Francisco, CA 94080. Available 24/7."
         keywords="contact MiBLane, limo service contact San Francisco, luxury transportation South San Francisco, MiBLane phone number, chauffeur service contact Bay Area"
         url="https://miblane.com/contact"
       />
@@ -36,7 +36,7 @@ export function Contact() {
               </li>
               <li className="flex flex-col">
                 <span className="text-gray-400 text-[9px] uppercase tracking-widest mb-2">Phone</span>
-                <a href="tel:+16692719105" className="font-serif text-2xl hover:text-gold transition-colors">+1 669 271 9105</a>
+                <a href="tel:+16505805650" className="font-serif text-2xl hover:text-gold transition-colors">+1 (650) 580-5650</a>
               </li>
               <li className="flex flex-col">
                 <span className="text-gray-400 text-[9px] uppercase tracking-widest mb-2">Email</span>

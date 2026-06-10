@@ -16,7 +16,7 @@ export const SEO: React.FC<SEOProps> = ({ title, description, keywords, url, isH
     "name": "MiBLane",
     "description": "Premium luxury chauffeur and limousine service in the San Francisco Bay Area. Airport transfers, corporate transportation, meet & greet, special events, and Napa wine tours.",
     "url": "https://miblane.com",
-    "telephone": "+16692719105",
+    "telephone": "+16505805650",
     "email": "booking@miblane.com",
     "address": {
       "@type": "PostalAddress",

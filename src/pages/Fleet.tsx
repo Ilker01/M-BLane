@@ -1,24 +1,70 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AnimatedSection } from '../components/AnimatedSection';
 import { SEO } from '../components/SEO';
-import { Users, Briefcase, Award, ShieldCheck, BatteryCharging, Plane, Headset } from 'lucide-react';
+import { Users, Briefcase, Award, ShieldCheck, BatteryCharging, Plane, Headset, ChevronLeft, ChevronRight } from 'lucide-react';
 
 // Image imports
-import ServicesCadillac from '../components/servicescadillac.jpg';
-import ServicesGMC from '../components/servicesgmc.32.07.png';
-import ServicesBMW from '../components/servicesbmw.jpg';
-import ServicesMercedes from '../components/servicesmercedes.jpg';
+import ServicesCadillac from '../components/newourfirstclassuv.jpg';
+import ServicesGMC from '../components/newourpremiumsuv.jpg';
+import ServicesFirstClassSedan from '../components/newourfirstclass.png';
+import ServicesMercedes from '../components/newourpremiumsedan.jpg';
+import InteriorPremiumSUV from '../components/interiorpremiumsuv.png';
 import ServicesSprinter from '../components/servicessprinter.jpg';
+import InteriorSprinter from '../components/interiorsprinter.22.13.png';
+
+function VehicleImageGallery({ images, name, imagePosition }: { images: string[], name: string, imagePosition?: string }) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  if (!images || images.length <= 1) {
+    return (
+      <img
+        src={images[0]}
+        alt={name}
+        className={`absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 ${imagePosition || 'object-center'}`}
+      />
+    );
+  }
+
+  return (
+    <>
+      <img
+        src={images[currentIndex]}
+        alt={`${name} view ${currentIndex + 1}`}
+        className={`absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 ${imagePosition || 'object-center'}`}
+      />
+      <button 
+        onClick={(e) => { e.preventDefault(); setCurrentIndex((prev) => (prev - 1 + images.length) % images.length); }}
+        className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 rounded-full flex items-center justify-center text-dark shadow-md hover:bg-white transition-colors"
+        aria-label="Previous image"
+      >
+        <ChevronLeft className="w-6 h-6" />
+      </button>
+      <button 
+        onClick={(e) => { e.preventDefault(); setCurrentIndex((prev) => (prev + 1) % images.length); }}
+        className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 rounded-full flex items-center justify-center text-dark shadow-md hover:bg-white transition-colors"
+        aria-label="Next image"
+      >
+        <ChevronRight className="w-6 h-6" />
+      </button>
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+        {images.map((_, i) => (
+          <div key={i} className={`w-2.5 h-2.5 rounded-full transition-colors ${i === currentIndex ? 'bg-white' : 'bg-white/50'}`} />
+        ))}
+      </div>
+    </>
+  );
+}
 
 const fleet = [
   {
-    category: "First class",
+    category: "First Class SUV",
     name: "Cadillac Escalade Platinum Sport",
     desc: "Upgraded comfort for 2 to 6 passengers. The pinnacle of luxury and space. Perfect for executive travel or premium airport transfers.",
     passengers: "2-6",
     luggage: "2-5",
     image: ServicesCadillac,
+    images: [ServicesCadillac, InteriorPremiumSUV],
   },
   {
     category: "Premium SUV",
@@ -27,14 +73,15 @@ const fleet = [
     passengers: "2-6",
     luggage: "2-6",
     image: ServicesGMC,
+    images: [ServicesGMC, InteriorPremiumSUV],
   },
   {
-    category: "Premium Sedan",
-    name: "BMW 530",
-    desc: "Elegant, dynamic, and refined. Ideal for corporate transportation and stylish city navigation.",
+    category: "First class sedan",
+    name: "Mercedes S-Class / BMW 7 Series",
+    desc: "Experience ultimate luxury and comfort with our top-tier sedans. The ideal choice for VIP executive trips and special occasions.",
     passengers: "2",
     luggage: "2",
-    image: ServicesBMW,
+    image: ServicesFirstClassSedan,
   },
   {
     category: "Premium Sedan",
@@ -51,13 +98,14 @@ const fleet = [
     passengers: "12",
     luggage: "10",
     image: ServicesSprinter,
+    images: [ServicesSprinter, InteriorSprinter],
     imagePosition: "object-bottom"
   }
 ];
 
 export function Fleet() {
   return (
-    <div className="flex flex-col bg-[#F9F9F9] pt-32 pb-24 px-4 sm:px-6 md:px-12 min-h-screen overflow-hidden">
+    <div className="flex flex-col bg-[#F9F9F9] pt-48 pb-24 px-4 sm:px-6 md:px-12 min-h-screen overflow-hidden">
       <SEO 
         title="Our Fleet | Luxury Vehicles — MiBLane Bay Area"
         description="Explore MiBLane's premium fleet including the Cadillac Escalade Platinum Sport, GMC Yukon, BMW 530, Mercedes Benz E 350, and Mercedes Sprinter. Contact for special pricing."
@@ -83,10 +131,10 @@ export function Fleet() {
               
               {/* Image Section */}
               <div className="w-full aspect-[4/3] md:aspect-[16/9] relative block overflow-hidden">
-                <img
-                  src={vehicle.image}
-                  alt={vehicle.name}
-                  className={`absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 ${vehicle.imagePosition || 'object-center'}`}
+                <VehicleImageGallery 
+                  images={vehicle.images || [vehicle.image]} 
+                  name={vehicle.name}
+                  imagePosition={vehicle.imagePosition}
                 />
               </div>
               
@@ -147,7 +195,7 @@ export function Fleet() {
                     <div>
                       <p className="font-bold text-dark mb-0.5 tracking-tight">24/7 Support</p>
                       <p className="text-gray-600 text-sm">
-                        +1 669 271 9105 & booking@miblane.com
+                        +1 (650) 580-5650 & booking@miblane.com
                       </p>
                     </div>
                   </div>

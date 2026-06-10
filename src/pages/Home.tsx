@@ -1,18 +1,16 @@
 import React, { useState, useRef } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { ChevronDown, Star, ArrowLeft, ArrowRight, Users, Briefcase } from 'lucide-react';
-import { Helmet } from 'react-helmet-async';
+import { ChevronDown, Star, ArrowLeft, ArrowRight, Users, Briefcase, Phone } from 'lucide-react';
 import { AnimatedSection } from '../components/AnimatedSection';
-import { StickyScrollCards } from '../components/StickyScrollCards';
 import { SEO } from '../components/SEO';
 import MeetAndGreetImg from '../components/meetandgreet.42.48.png';
 import HeroImg from '../components/hero-main-pic.jpg';
 
-import CadillacSUV from '../components/Cadillacexecutivesuv.27.09.png';
-import BMW530 from '../components/bmw530sedan.28.03.png';
-import MercedesSedan from '../components/mercedessedan.28.24.png';
-import GMCYukon from '../components/gmcyukonsuv.27.34.png';
-import SprinterVan from '../components/sprinter.29.16.png';
+import SprinterVan from '../components/newsprinter.png';
+import NewFirstClassSedan from '../components/newfirstclasssedan.png';
+import NewFirstClassSUV from '../components/newfirstclasssuv.jpg';
+import NewPremiumSedan from '../components/newpremiumsedan.png';
+import NewPremiumSUV from '../components/newpremiumsuv.png';
 
 import NapaValley from '../components/napa valley.jpg';
 import TopNapa from '../components/topnapa.jpg';
@@ -27,21 +25,28 @@ const vehicles = [
     desc: "Mercedes E-Class, BMW 530, Lexus ES, Cadillac CT6, or similar.",
     passengers: "2",
     luggage: "2",
-    image: MercedesSedan,
+    image: NewPremiumSedan,
+  },
+  {
+    title: "First class sedan",
+    desc: "Mercedes S-Class, BMW 7 Series, or similar.",
+    passengers: "2",
+    luggage: "2",
+    image: NewFirstClassSedan,
   },
   {
     title: "Premium SUV",
     desc: "GMC Yukon, Chevy Suburban, Ford Expedition, or similar.",
     passengers: "6",
     luggage: "6",
-    image: GMCYukon,
+    image: NewPremiumSUV,
   },
   {
     title: "First class SUV",
     desc: "Cadillac Escalade Platinum Sport, Lincoln Navigator, or similar.",
     passengers: "6",
     luggage: "5",
-    image: CadillacSUV,
+    image: NewFirstClassSUV,
   },
   {
     title: "Sprinter Van",
@@ -73,7 +78,7 @@ const destinations = [
 const faqs = [
   {
     q: "How do I make a booking?",
-    a: 'You can book directly through our online booking system via the "Book Now" button, or reach us by phone at +1 669 271 9105. We\'re available 24/7.'
+    a: 'You can book directly through our online booking system via the "Book Now" button, or reach us by phone at +1 (650) 580-5650. We\'re available 24/7.'
   },
   {
     q: "Is a deposit required to confirm my reservation?",
@@ -140,35 +145,8 @@ export function Home() {
         url="https://miblane.com"
         isHome={true}
       />
-      <Helmet>
-        <style>
-          {`
-            #moovs-widget-container {
-              width: 100%;
-              max-width: 100%;
-              margin: 0 auto;
-              transition: all 0.3s ease;
-            }
-            #moovs-widget-container iframe {
-              width: 100%;
-              border: none;
-              border-radius: 12px;
-              box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-              background: transparent;
-            }
-            @media (max-width: 768px) {
-              #moovs-widget-container {
-                max-width: 100%;
-              }
-              #moovs-widget-container iframe {
-                border-radius: 8px;
-              }
-            }
-          `}
-        </style>
-      </Helmet>
       {/* Hero Section */}
-      <section id="hero" className="relative min-h-[850px] min-h-[100dvh] pt-32 pb-24 flex items-center justify-center overflow-hidden">
+      <section id="hero" className="relative min-h-[850px] min-h-[100dvh] pt-48 pb-24 flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0 bg-[#0E0E0E]">
           <img 
             src={HeroImg} 
@@ -182,21 +160,42 @@ export function Home() {
         <div className="relative z-10 w-full px-2 md:px-4">
           <div className="max-w-[1600px] mx-auto text-center">
             <AnimatedSection animation="fade-up">
+              <div className="flex items-center justify-center gap-6 mb-8 mt-12 md:mt-0 opacity-80">
+                <div className="h-[1px] w-12 sm:w-24 bg-gold"></div>
+                <span className="text-gold font-sans font-bold tracking-[0.25em] text-xs sm:text-sm uppercase whitespace-nowrap">
+                  Serving the Bay Area
+                </span>
+                <div className="h-[1px] w-12 sm:w-24 bg-gold"></div>
+              </div>
               <h1 
-                className="font-serif text-white mb-4 leading-none"
-                style={{ fontSize: 'clamp(4rem, 8vw, 7rem)' }}
+                className="font-serif text-white mb-6 leading-[0.95]"
+                style={{ fontSize: 'clamp(4rem, 10vw, 8rem)', letterSpacing: '-0.02em', fontWeight: 700 }}
               >
-                {bookingTitle ? decodeURIComponent(bookingTitle) : 'Arrive in Style.'}
+                {bookingTitle ? decodeURIComponent(bookingTitle) : <>Arrive in<br />Style.</>}
               </h1>
             </AnimatedSection>
             <AnimatedSection animation="fade-up" delay={200}>
-              <p className="text-xl md:text-2xl text-white/80 mb-10 font-light">
+              <p className="text-xl md:text-[1.4rem] text-white/90 mb-14 font-light tracking-wide max-w-2xl mx-auto font-sans">
                 A safe start to a safe journey.
               </p>
             </AnimatedSection>
-            <AnimatedSection animation="fade-up" delay={400} className="w-full px-0">
-              <div id="moovs-widget-container">
-                <iframe src="https://customer.moovs.app/mib-lane/iframe" title="Moovs App" className="w-full h-[650px] md:h-[450px]"></iframe>
+            <AnimatedSection animation="fade-up" delay={400}>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 px-4 sm:px-0">
+                <a 
+                  href={MOOVS_URL} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto inline-flex items-center justify-center px-12 py-5 bg-gold text-white font-bold uppercase tracking-[0.15em] text-sm hover:bg-[#b39441] transition-colors"
+                >
+                  Book Online
+                </a>
+                <a 
+                  href="tel:+16505805650" 
+                  className="w-full sm:w-auto inline-flex items-center justify-center px-12 py-5 bg-transparent border border-white text-white font-bold uppercase tracking-[0.15em] text-sm hover:bg-white/10 transition-colors"
+                >
+                  <Phone className="w-5 h-5 mr-3" />
+                  Call Us Today
+                </a>
               </div>
             </AnimatedSection>
           </div>
@@ -287,7 +286,8 @@ export function Home() {
                     <img 
                       src={vehicle.image} 
                       alt={vehicle.title} 
-                      className="w-full h-full object-contain object-center scale-110" 
+                      className="w-full h-full object-contain object-center scale-110"
+                      style={{ clipPath: vehicle.title === 'Sprinter Van' ? 'inset(0 0 16% 0)' : 'none' }}
                     />
                   </div>
                   <div className="flex justify-between items-center mb-3 mt-auto">
@@ -384,7 +384,7 @@ export function Home() {
             <AnimatedSection>
                <div className="bg-white/5 p-8 border border-white/10 rounded-sm hover:border-gold/30 transition-colors">
                 <p className="text-[10px] uppercase tracking-widest text-white/40 mb-3">Direct Assistance</p>
-                <p className="text-2xl md:text-3xl font-serif text-white mb-2">+1 669 271 9105</p>
+                <p className="text-2xl md:text-3xl font-serif text-white mb-2">+1 (650) 580-5650</p>
                 <p className="text-xs text-gold">booking@miblane.com</p>
               </div>
             </AnimatedSection>
@@ -433,19 +433,6 @@ export function Home() {
             </div>
           </div>
         </div>
-      </section>
-
-      {/* Experience Luxury Storytelling */}
-      <section className="bg-dark pt-24">
-        <div className="max-w-7xl mx-auto px-5 mb-12">
-          <AnimatedSection>
-            <h2 className="font-serif text-3xl md:text-4xl text-white">
-              Experience Luxury with MiBLane
-            </h2>
-          </AnimatedSection>
-        </div>
-        
-        <StickyScrollCards />
       </section>
 
       {/* Trust Signals */}
@@ -551,8 +538,8 @@ export function Home() {
               </Link>
             </div>
             <div className="mt-12 pt-12 border-t border-white/10 flex flex-col md:flex-row justify-center gap-8 text-sm text-white/50">
-              <a href="tel:+16692719105" className="hover:text-gold transition-colors font-serif text-xl">
-                 +1 669 271 9105
+              <a href="tel:+16505805650" className="hover:text-gold transition-colors font-serif text-xl">
+                 +1 (650) 580-5650
               </a>
               <a href="mailto:booking@miblane.com" className="hover:text-gold transition-colors font-serif text-xl">
                  booking@miblane.com
